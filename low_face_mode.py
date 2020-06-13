@@ -1,7 +1,6 @@
 # dim the computer screen when not looking at it with opencv
 
 from cv2 import cv2
-import numpy as np
 import osascript
 
 
