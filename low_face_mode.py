@@ -47,19 +47,25 @@ while True:
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     face_counter.append(len(faces))
 
-    users, verified_users = get_name(img)
+    users, verified_users, rec = get_name(img)
 
-    if frames > 25:
+    if frames > 20:
+
         if dimmed == False:
-            if 1 not in face_counter[frames - 20 : frames]:
+            if 1 not in face_counter[frames - 20 : frames] or ((bool(set(users) & set(verified_users)) == False) and rec == True):
                 dim()
                 dimmed = True
 
         if dimmed == True:
-            if set(users) & set(verified_users):
+            if rec == True:
+                if set(users) & set(verified_users):
+                    if 1 in face_counter[frames - 20 : frames]:
+                        brighten()
+                        dimmed = False
+            else:
                 if 1 in face_counter[frames - 20 : frames]:
-                    brighten()
-                    dimmed = False
+                        brighten()
+                        dimmed = False
 
     for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)

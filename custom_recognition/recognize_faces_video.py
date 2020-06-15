@@ -1,5 +1,5 @@
 """
-Program taken and modified from https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/
+Some of this program has been taken and modified from https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/
 I do not make any claim over this content, which is property of Adrian Rosebrock.
 Please do not reproduce commercially without permission from the author.
 """
@@ -19,6 +19,26 @@ from custom_recognition.encode_faces import encode_images
 ap = argparse.ArgumentParser()
 
 ap.add_argument(
+    "-r", "--recognition", type=str, default = "True", help="whether custom recognition is True/False"
+)
+
+ap.add_argument(
+    "-d",
+    "--database",
+    type=bool,
+    default=False,
+    help="create facial database; True/False",
+)
+
+ap.add_argument(
+    "-y",
+    "--yourname",
+    type = str,
+    default = 'none',
+    help = "name used for creating custom face database, MUST be same as in --users"
+)
+
+ap.add_argument(
     "-u",
     "--users",
     type=list,
@@ -26,11 +46,10 @@ ap.add_argument(
     help="list of verified users to brighten screen",
 )
 
-ap.add_argument("-d", "--database", type = bool, default=False, help="create facial database; True/False")
 args = vars(ap.parse_args())
 
-if args["database"] == True:
-    create_videos()
+if args["database"] == True and args["recognition"] == True:
+    create_videos(args["yourname"])
     encode_images()
 
 # load the known faces and embeddings
@@ -87,4 +106,9 @@ def get_name(frame):
 
     # check to see if we are supposed to display the output frame to
     # the screen
-    return names, verified_users
+    result = args["recognition"]
+    if result == "True" or result == "true" or result == 'y' or result == 'on':
+        result = True
+    elif result == "False" or result == "false" or result == "n" or result == "off":
+        result = False
+    return names, verified_users, result

@@ -1,5 +1,5 @@
 '''
-Program taken and modified from https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/
+Parts of this program taken and modified from https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/
 I do not make any claim over this content, which is property of Adrian Rosebrock.
 Please do not reproduce commercially without permission from the author.
 '''
@@ -11,12 +11,12 @@ import time
 import cv2
 import os
 
-def create_videos():
-    
+def create_videos(name):
+
     detector = cv2.CascadeClassifier("data/haarcascade_frontalface_default.xml")
 
     parent_directory = os.getcwd()
-    new_directory = "custom_recognition/dataset/simon"
+    new_directory = "custom_recognition/dataset/" + str(name)
     path = os.path.join(parent_directory, new_directory)
     os.mkdir(path)
 
@@ -48,7 +48,7 @@ def create_videos():
         key = cv2.waitKey(1) & 0xFF
 
         if key == ord("k"):
-            p = os.path.sep.join(["custom_recognition/dataset/simon", "{}.png".format(str(total).zfill(5))])
+            p = os.path.sep.join(["custom_recognition/dataset/" + str(name), "{}.png".format(str(total).zfill(5))])
 
             cv2.imwrite(p, orig)
             total += 1
