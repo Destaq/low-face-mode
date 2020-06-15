@@ -11,12 +11,12 @@ import pickle
 import time
 import cv2
 import imutils
+from custom_recognition.build_face_dataset import create_videos
+from custom_recognition.encode_faces import encode_images
+
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument(
-    "-e", "--encodings", required=True, help="path to serialized db of facial encodings"
-)
 
 ap.add_argument(
     "-u",
@@ -26,11 +26,16 @@ ap.add_argument(
     help="list of verified users to brighten screen",
 )
 
+ap.add_argument("-d", "--database", type = bool, default=False, help="create facial database; True/False")
 args = vars(ap.parse_args())
+
+if args["database"] == True:
+    create_videos()
+    encode_images()
 
 # load the known faces and embeddings
 print("[INFO] loading encodings...")
-data = pickle.loads(open(args["encodings"], "rb").read())
+data = pickle.loads(open("custom_recognition/encodings.pickle", "rb").read())
 # initialize the video stream and pointer to output video file, then
 # allow the camera sensor to warm up
 print("[INFO] starting video stream...")
@@ -38,8 +43,8 @@ time.sleep(2.0)
 
 verified_users = []
 for i in range(len(args["users"])):
-    verified_users.append(''.join(args["users"][i]))
-    
+    verified_users.append("".join(args["users"][i]))
+
 # loop over frames from the video file stream
 def get_name(frame):
     # grab the frame from the threaded video stream

@@ -2,7 +2,9 @@
 
 from cv2 import cv2
 import osascript
+import argparse
 from custom_recognition.recognize_faces_video import get_name
+
 
 
 def dim():
@@ -36,6 +38,7 @@ capture = cv2.VideoCapture(0)
 face_counter = []
 frames = 0
 dimmed = False
+
 while True:
     _, img = capture.read()
     frames += 1
