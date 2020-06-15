@@ -11,4 +11,4 @@ By doing this, it preserves battery life, as the screen is dimmed down to zero w
 
 ## Code in Action!
 
-![Example GIF](https://github.com/Destaq/low-face-mode/blob/master/sample.gif)
+![Example GIF](https://github.com/Destaq/low-face-mode/blob/master/data/sample.gif)
