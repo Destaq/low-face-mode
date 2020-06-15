@@ -44,7 +44,6 @@ If you are confused, you can type `python3 low_face_mode.py -h` to get the overv
 
 `opencv`
 `osascript`
-`numpy`
 `argparse`
 `pickle`
 `imutils`
