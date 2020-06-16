@@ -5,30 +5,21 @@ import osascript
 import argparse
 from custom_recognition.recognize_faces_video import get_name
 
+with open("scripts/brighten.applescript") as brighten:
+    brighten_script = brighten.read()
+
+with open("scripts/dim.applescript") as dim:
+    dim_script = dim.read()
 
 
 def dim():
-    script = """
-    tell application "System Events"
-        repeat 32 times
-            key code 145
-            delay 0.02
-        end repeat
-    end tell
-    """
-    osascript.osascript(script)
+
+    osascript.osascript(dim_script)
 
 
 def brighten():
-    script = """
-    tell application "System Events"
-        repeat 32 times
-            key code 144
-            delay 0.02
-        end repeat
-    end tell
-    """
-    osascript.osascript(script)
+
+    osascript.osascript(brighten_script)
 
 
 face_cascade = cv2.CascadeClassifier("data/haarcascade_frontalface_default.xml")
@@ -52,7 +43,9 @@ while True:
     if frames > 20:
 
         if dimmed == False:
-            if 1 not in face_counter[frames - 20 : frames] or ((bool(set(users) & set(verified_users)) == False) and rec == True):
+            if 1 not in face_counter[frames - 20 : frames] or (
+                (bool(set(users) & set(verified_users)) == False) and rec == True
+            ):
                 dim()
                 dimmed = True
 
@@ -64,8 +57,8 @@ while True:
                         dimmed = False
             else:
                 if 1 in face_counter[frames - 20 : frames]:
-                        brighten()
-                        dimmed = False
+                    brighten()
+                    dimmed = False
 
     for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
