@@ -1,6 +1,6 @@
 """
-Some of this program has been modified from https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/
-I do not make any claim over this content, which is property of Adrian Rosebrock.
+Program made and modified from tutorial on https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/
+Adiran Rosebrock kindly provided this tutorial on custom face recognition, which I used and adapated for low-face-mode.
 Please do not reproduce commercially without permission from the author.
 """
 
