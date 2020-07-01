@@ -3,23 +3,47 @@
 from cv2 import cv2
 import osascript
 import argparse
+import platform
+from subprocess import call
 from custom_recognition.recognize_faces_video import get_name
 
-with open("scripts/brighten.applescript") as brighten:
-    brighten_script = brighten.read()
+# if running on Linux, load linux scripts
+if platform.system() == 'Linux':
 
-with open("scripts/dim.applescript") as dim:
-    dim_script = dim.read()
+    with open("linux_scripts/brighten.sh") as f:
+        brighten_script = f.read()
+
+    with open("linux_scripts/dim.sh") as f:
+        dim_script = f.read()
+
+# if running on MacOS, load apple scripts
+elif platform.system() == 'Darwin':
+
+    with open("scripts/brighten.applescript") as brighten:
+        brighten_script = brighten.read()
+
+    with open("scripts/dim.applescript") as dim:
+        dim_script = dim.read()
+
+# TODO: Add support on windows
 
 
 def dim():
 
-    osascript.osascript(dim_script)
+    if platform.system() == 'Linux':
+        call(dim_script, shell=True)
+
+    elif platform.system() == 'Darwin':
+        osascript.osascript(dim_script)
 
 
 def brighten():
 
-    osascript.osascript(brighten_script)
+    if platform.system() == 'Linux':
+        call(brighten_script, shell=True)
+
+    elif platform.system() == 'Darwin':
+        osascript.osascript(brighten_script)
 
 
 face_cascade = cv2.CascadeClassifier("data/haarcascade_frontalface_default.xml")
